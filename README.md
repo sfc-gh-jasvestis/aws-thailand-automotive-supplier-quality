@@ -119,7 +119,7 @@ Run all scripts including AWS integration. Deploy QuickSight dashboard from `qui
 Industry research and Snowflake customer outcomes:
 - **Thailand produced 1.88 million vehicles in 2023, ranking 12th globally with ฿2.5T in exports** — [FTI Thailand](https://www.fti.or.th/eng/)
 - **AI-powered supplier quality management reduces COPQ by 20-35% in automotive manufacturing** — [McKinsey Automotive](https://www.mckinsey.com/industries/automotive-and-assembly/our-insights)
-- **Document AI processing reduces audit review time by 70%, catching 40% more non-conformances** — [Deloitte Digital](https://www2.deloitte.com/us/en/insights/industry/manufacturing/industry-4-0.html)
+- **Document AI processing reduces audit review time by 70%, catching 40% more non-conformances** — [Deloitte Digital](https://www.deloitte.com/us/en/insights/focus/industry-4-0.html)
 - **Toyota Thailand operates 500+ supplier quality audits annually across its Thai supply base** — [Toyota Thailand](https://www.toyota.co.th/en)
 - **BMW Group** (Snowflake customer): saved 25% on large data workloads and launched 60 operational use cases in 18 months on Snowflake -- [snowflake.com/customers/bmw-group](https://www.snowflake.com/en/customers/all-customers/case-study/bmw-group/)
 
