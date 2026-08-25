@@ -8,7 +8,7 @@ USE SCHEMA APP;
 CREATE OR REPLACE NOTIFICATION INTEGRATION aws_thailand_automotive_supplier_quality_EMAIL_INT
   TYPE = EMAIL
   ENABLED = TRUE
-  ALLOWED_RECIPIENTS = ('jonathan.asvestis@snowflake.com');
+  ALLOWED_RECIPIENTS = ('<YOUR_EMAIL>');
 
 -- Alert: SUPPLIER_RISK_ALERT
 CREATE OR REPLACE ALERT APP.SUPPLIER_RISK_ALERT
@@ -22,7 +22,7 @@ IF (EXISTS (
 THEN
   CALL SYSTEM$SEND_EMAIL(
     'aws_thailand_automotive_supplier_quality_EMAIL_INT',
-    'jonathan.asvestis@snowflake.com',
+    '<YOUR_EMAIL>',
     '[ALERT] Supplier Quality Management: Supplier risk score exceeds critical threshold',
     'Supplier risk score exceeds critical threshold'
   );
@@ -41,7 +41,7 @@ IF (EXISTS (
 THEN
   CALL SYSTEM$SEND_EMAIL(
     'aws_thailand_automotive_supplier_quality_EMAIL_INT',
-    'jonathan.asvestis@snowflake.com',
+    '<YOUR_EMAIL>',
     '[ALERT] Supplier Quality Management: Supplier audit overdue by 30+ days',
     'Supplier audit overdue by 30+ days'
   );
