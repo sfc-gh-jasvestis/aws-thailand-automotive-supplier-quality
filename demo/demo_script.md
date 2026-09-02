@@ -1,109 +1,82 @@
-# Demo Script: Supplier Quality Management
-## ~4-Minute Recorded Walkthrough
-**Format**: Screen recording with voiceover
-**Target**: Customer meeting / booth loop / social share
-**Narrative**: "Snowflake ingests and parses supplier audit documents, indexes Thai automotive quality standards for instant retrieval, classifies supplier risk, and alerts procurement — replacing manual compliance tracking with AI-native workflows"
-**Demo Mode**: Open app with `?demo=true` for presenter notes
+# Supplier Quality Management
 
----
+**Thailand - Automotive Manufacturing**
+Use case: Supplier Quality & Compliance
 
-## Two Personas
+> AI-powered supplier quality management for 200+ tier-1 automotive suppliers — Textract parses audit reports, Cortex Search indexes quality standards, and AI_PARSE_DOCUMENT extracts non-conformance data across Thailand's automotive supply chain.
 
-| Persona | Role | Tool | What they care about |
-|---|---|---|---|
-| **Prasert Thanapatpisal** | Head of Supplier Quality | React App (SPCS) | Supplier risk scores, non-conformance trends, audit compliance rates, cost of poor quality |
-| **Nattaya Siriphanich** | Quality Assurance Engineer | Amazon QuickSight | Audit findings, corrective action tracking, IATF 16949 compliance, document traceability |
+## Why Snowflake
 
----
+Snowflake ingests and parses supplier audit documents, indexes Thai automotive quality standards for instant retrieval, classifies supplier risk, and alerts procurement — replacing manual compliance tracking with AI-native workflows
 
-## What's Built
+- **AI_PARSE_DOCUMENT on supplier audit PDFs** - Only demo extracting structured quality data from Thai-language audit documents
+- **Cortex Search on IATF 16949 + Thai standards** - Natural language search across automotive quality standards for instant compliance lookup
+- **Supplier risk scoring via Dynamic Tables** - Real-time risk scores combining NCRs, inspections, and audit findings
+- **Thai automotive supply chain context** - 220 realistic Thai supplier names with Eastern Seaboard industrial zone locations
+- **Document-to-insight pipeline** - End-to-end: PDF upload → parse → classify → search → alert in one platform
+- **COPQ calculation with AI root-cause** - Automated Cost of Poor Quality attribution with AI-generated corrective actions
 
-| Layer | Component | Detail |
+## What is deployed
+
+| | |
+|---|---|
+| Database | `THAILAND_AUTOMOTIVE_SUPPLIER_QUALITY` |
+| Service | `THAILAND_AUTOMOTIVE_SUPPLIER_QUALITY_APP` |
+| Compute pool | `SEA_DEMOS_THAILAND_POOL` |
+| Dimension table | `RAW.THAI_AUTO_INDUSTRY` (20 rows) |
+| Fact table | `RAW.INCOMING_INSPECTION` (250,000 rows, 90 days) |
+| Curated layer | `CURATED.PERFORMANCE_SUMMARY`, `CURATED.TREND_ANALYSIS`, `CURATED.KPI_SUMMARY` |
+| Currency | THB (฿) |
+
+Regions in play: Bangkok, Chonburi, Rayong, Chiang Mai, Songkhla
+Segments: Tier 1 Stamping, Tier 1 Electronics, Tier 2 Casting, Tier 2 Rubber
+
+Dynamic tables are created suspended and refreshed on demand:
+
+```bash
+./refresh_demo_data.sh THAILAND_AUTOMOTIVE_SUPPLIER_QUALITY
+```
+
+## KPI cards
+
+Every card below is served live from `CURATED.KPI_SUMMARY`. The app keeps the
+original literal as a fallback, so it still renders if Snowflake is unreachable.
+
+| Card | Value | Backed by |
 |---|---|---|
-| **RAW** | 8 tables | SUPPLIERS (220), AUDIT_REPORTS (450), NON_CONFORMANCES (3200), CORRECTIVE_ACTIONS (2800), QUALITY_STANDARDS (150), INCOMING_INSPECTION (50000), SUPPLIER_SCORECARDS (2640), THAI_AUTO_INDUSTRY (10) |
-| **CURATED** | 4 Dynamic Tables | SUPPLIER_RISK_SCORES, NCR_TRENDS, AUDIT_COMPLIANCE, COPQ_SUMMARY |
-| **ML** | ML.FORECAST + ML.ANOMALY_DETECTION | Forecasting + anomaly detection |
-| **AI** | AI_PARSE_DOCUMENT, AI_CLASSIFY, SUMMARIZE | Classification + extraction |
-| **Search** | Cortex Search | 150 documents indexed |
-| **Agent** | SUPPLIER_QUALITY_AGENT | Semantic View + Search tools |
+| Supplier PPM (Avg) | `34` | average per event |
+| Critical NCRs Open | `7` | total across Thai Auto Industry |
+| On-Time Delivery | `94.7%` | average per event |
+| Active Suppliers | `248` | total across Thai Auto Industry |
+| At-Risk Suppliers | `12` | average per event |
+| Dual-Source Coverage | `78%` | average per event |
+| Avg Lead Time | `14 days` | average per event |
 
 
----
+## Demo flow
 
-## The Story
+1. Executive Cockpit
+2. Supplier Risk Analysis
+3. Standards & Compliance
+4. Ask AI
+5. Architecture & Data
 
-Thailand produces 1.88 million vehicles annually with 220+ tier-1 suppliers across the Eastern Seaboard. Manual audit tracking and paper-based compliance create blind spots — 14 suppliers are silently degrading in quality, generating ฿1.2B in annual Cost of Poor Quality that traditional scorecards detect months too late.
+## Talking points
 
----
+- **฿1.2B** - annual Cost of Poor Quality across 220 suppliers (US$34M)
+- **14 suppliers** - flagged HIGH RISK (score > 80)
+- **23 audits** - overdue by more than 30 days
+- **450 PDFs** - parsed by AI_PARSE_DOCUMENT into structured findings
+- **3,200 NCRs** - tracked with AI-classified severity
+- **150 standards** - indexed in Cortex Search for instant compliance lookup
 
-## Script
+## Business impact
 
-### [0:00–0:45] EXECUTIVE COCKPIT
-
-**Show**: Executive Cockpit tab
-
-> "One point two billion baht in Cost of Poor Quality across 220 suppliers this year."
-
-**Action**: Point at the ฿1.2B COPQ KPI card
-
-### [0:45–1:30] SUPPLIER RISK ANALYSIS
-
-**Show**: Supplier Risk Analysis tab
-
-> "Supplier S-0047 (Siam Parts Manufacturing) — risk score 92, twelve NCRs in 90 days."
-
-**Action**: Click S-0047 in the risk-ranked supplier list
-
-### [1:30–2:15] STANDARDS & COMPLIANCE
-
-**Show**: Standards & Compliance tab
-
-> "Cortex Search indexes 150 quality standards — IATF 16949, TISI, and OEM-specific requirements."
-
-**Action**: Demo a Cortex Search query
-
-### [2:15–3:00] ASK AI
-
-**Show**: Ask AI tab
-
-> "Prasert asks: 'Which suppliers have the highest COPQ this quarter?'"
-
-**Action**: Type: 'Top 5 suppliers by COPQ this quarter'
-
-### [3:00–3:45] ARCHITECTURE & DATA
-
-**Show**: Architecture & Data tab
-
-> "Seven Snowflake capabilities, six AWS services."
-
-**Action**: Walk through architecture diagram
-
+- Thailand produced 1.88 million vehicles in 2023, ranking 12th globally with ฿2.5T in exports (FTI Thailand)
+- AI-powered supplier quality management reduces COPQ by 20-35% in automotive manufacturing (McKinsey Automotive)
+- Document AI processing reduces audit review time by 70%, catching 40% more non-conformances (Deloitte Digital)
+- Toyota Thailand operates 500+ supplier quality audits annually across its Thai supply base (Toyota Thailand)
 
 ---
-
-## Key Demo Differentiators
-
-1. **AI_PARSE_DOCUMENT on supplier audit PDFs** — Only demo extracting structured quality data from Thai-language audit documents
-2. **Cortex Search on IATF 16949 + Thai standards** — Natural language search across automotive quality standards for instant compliance lookup
-3. **Supplier risk scoring via Dynamic Tables** — Real-time risk scores combining NCRs, inspections, and audit findings
-4. **Thai automotive supply chain context** — 220 realistic Thai supplier names with Eastern Seaboard industrial zone locations
-5. **Document-to-insight pipeline** — End-to-end: PDF upload → parse → classify → search → alert in one platform
-6. **COPQ calculation with AI root-cause** — Automated Cost of Poor Quality attribution with AI-generated corrective actions
-
-
----
-
-## Demo Prep Checklist
-
-### Data Verification
-- [ ] `SELECT COUNT(*) FROM SUPPLIER_QUALITY.RAW.AUDIT_REPORTS` → 450
-- [ ] `SELECT COUNT(*) FROM SUPPLIER_QUALITY.RAW.NON_CONFORMANCES` → 3200
-- [ ] `SELECT COUNT(*) FROM SUPPLIER_QUALITY.CURATED.SUPPLIER_RISK_SCORES WHERE RISK_SCORE > 80` → 14
-
-### ML Model Verification
-- [ ] `SELECT COUNT(*) FROM SUPPLIER_QUALITY.ML.NCR_FORECAST_RESULTS` → >0
-- [ ] `SELECT SUM(CASE WHEN IS_ANOMALY THEN 1 ELSE 0 END) FROM SUPPLIER_QUALITY.ML.SUPPLIER_ANOMALY_RESULTS WHERE SERIES = 'S-0047'` → >=6
-
-### AI/Agent Verification
-- [ ] `SELECT COUNT(*) FROM SUPPLIER_QUALITY.AI.PARSED_AUDIT_FINDINGS` → >400
-
+Generated from `generator/demo_specs/aws-thailand-automotive-supplier-quality.json`. Do not hand-edit: run
+`python3 generator/gen_repo_docs.py aws-thailand-automotive-supplier-quality` instead.
