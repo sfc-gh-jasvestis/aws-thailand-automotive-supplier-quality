@@ -53,6 +53,7 @@ export default function HomePage() {
         <div className="lg:col-span-1">
           <GeoMap
             country="thailand"
+            labels={{ entity: 'Suppliers', event: 'Incoming Inspections', alert: 'NCRs' }}
             regions={data?.regions}
             markers={[{"label": "Rayong", "value": "Tier-1: 84 suppliers", "color": "green", "size": "lg"}, {"label": "Bangkok", "value": "Tier-1: 42 suppliers", "color": "green", "size": "md"}, {"label": "Chiang Mai", "value": "Tier-2: NCR open", "color": "red", "size": "md"}]}
             routes={[{"from": "Rayong", "to": "Bangkok", "color": "#10B981"}]}
@@ -83,8 +84,13 @@ export default function HomePage() {
         columns={[
           { key: 'id', header: 'Rank' },
           { key: 'name', header: 'Supplier' },
+          { key: 'region', header: 'Region' },
           { key: 'status', header: 'Rating' },
-          { key: 'value', header: 'PPM' },
+          { key: 'm1', header: 'PPM' },
+          { key: 'm2', header: 'On Time Delivery' },
+          { key: 'm3', header: 'At Risk Suppliers' },
+          { key: 'events', header: 'Incoming Inspections' },
+          { key: 'alerts', header: 'NCRs' },
         ]}
         data={data?.entities || []}
         title="Supplier Scorecard"
